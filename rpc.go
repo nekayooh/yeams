@@ -192,15 +192,15 @@ func (m YeaRPC) UnRegister(ctx context.Context, msg *proto.UnRegMsg) (*proto.UnR
 //通信
 func (m YeaRPC) Msg(ctx context.Context, msg *proto.SendMsg) (*proto.SendRtnMsg, error) {
 
-	moduleIndex := int(YeaModules[msg.Name].Count)
-	if moduleIndex >= int(YeaModules[msg.Name].Total)-1 {
-		YeaModules[msg.Name].Count = int64(0)
-	} else {
-		YeaModules[msg.Name].Count++
-	}
 	//if _, ok := YeaModules[msg.Name]; ok {
 	//	if YeaModules[msg.Name].Modules[moduleIndex%int(YeaModules[msg.Name].Total)].Uuid.String() == msg.Uuid {
 	if _, ok := YeaModules[msg.Name]; ok {
+		moduleIndex := int(YeaModules[msg.Name].Count)
+		if moduleIndex >= int(YeaModules[msg.Name].Total)-1 {
+			YeaModules[msg.Name].Count = int64(0)
+		} else {
+			YeaModules[msg.Name].Count++
+		}
 		YeaModules[msg.Name].Modules[moduleIndex%int(YeaModules[msg.Name].Total)].Close <- false
 		NoticeClient := <-YeaModules[msg.Name].Modules[moduleIndex%int(YeaModules[msg.Name].Total)].Chan
 		return (*NoticeClient).Msg(ctx, msg)
