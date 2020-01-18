@@ -1,0 +1,8 @@
+{
+  "Version": "3.2.11",
+  "Key": "zu/nzL3U8WPMv0vwKU0dpMkiszGz1YeOUL90CeivfVVawtmE2smAyISiZh/AlxZrluyvtz/l4NUxh0iHUgFoejibVAjE38j+t1GqeiV5ftTqBcDr9sIgpt9KcQt4ke47dEDABpDfZ4DYTNgf8cfxXWC0vLh3vjDxNgespC2wZJvLSLWNA4VTLy3fIM9j5PERx7EELQGqyxtiAZn+akYtZ/sC33x6rdMnRDQs8FeGSXFjxLUg1WLEQZeE6Rk2mEeL3/tR0gfb3WuZ5jkBPiD6s7c26LbtMHsagiisr9v3I6FSu9YGCQrvnwnd/zV0rEQ1fDeoxpYzp+qO0eo5Q/jFrA==",
+  "Name": "示例插件",
+  "Address": "localhost",
+  "Port": 80,
+  "Thread": 32
+}

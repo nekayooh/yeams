@@ -1,0 +1,68 @@
+syntax = "proto3";
+package proto;
+
+enum ReturnCode {
+    Success = 0; //成功
+    Failure = 1; //失败
+}
+
+//-----------注册-----------
+//注册模块
+message RegMsg {
+    string version = 1; //模块版本
+    bytes key = 2; //验证秘钥
+    string name = 3; //模块名称
+    string address = 4; //模块地址
+    int64 port = 5; //模块端口（-1随机分配端口，其他指定端口，20001默认服务端口）
+    int64 thread = 6; //模块线程数
+    repeated SendMsg module = 7; //注册成功后通知模块
+}
+//注册成功后返回信息
+message RegRtnMsg {
+    ReturnCode status = 1; //注册成功返回状态
+    string uuid = 2; //注册成功返回签名
+}
+
+//-----------取消注册-----------
+//取消注册模块
+message UnRegMsg {
+    string uuid = 1; //模块签名
+    string name = 2; //模块名称
+    repeated SendMsg module = 3; //取消注册成功后通知模块
+}
+//取消注册成功后返回信息
+message UnRegRtnMsg {
+    ReturnCode status = 1; //取消注册成功返回状态
+}
+
+//-----------通信-----------
+message SendMsg {
+    string name = 1; //通信模块名称
+    bytes json = 2; //通信模块信息
+}
+message SendRtnMsg {
+    ReturnCode status = 1; //通信成功返回状态
+    bytes json = 2; //通信返回信息
+}
+
+
+service YeaModule {
+    //    注册
+    rpc Register (RegMsg) returns (RegRtnMsg) {
+    }
+    //    取消注册
+    rpc UnRegister (UnRegMsg) returns (UnRegRtnMsg) {
+    }
+    //    数据查询
+    rpc Msg (SendMsg) returns (SendRtnMsg) {
+    }
+}
+
+
+service YeaNotice {
+    rpc Msg (SendMsg) returns (SendRtnMsg) {
+    }
+    //    取消注册
+    rpc UnRegister (UnRegMsg) returns (UnRegRtnMsg) {
+    }
+}
