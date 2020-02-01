@@ -221,6 +221,12 @@ func (m YeaRPC) Msg(ctx context.Context, msg *proto.SendMsg) (*proto.SendRtnMsg,
 	//}
 }
 
+func (m YeaRPC) Ping(context.Context, *proto.DefaultMsg) (*proto.DefaultRtnMsg, error) {
+	return &proto.DefaultRtnMsg{
+		Status: proto.ReturnCode_Failure,
+	}, nil
+}
+
 func GrpcOp() {
 	lis, err := net.Listen("tcp", ":20001")
 	if err != nil {
