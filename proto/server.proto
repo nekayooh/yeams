@@ -6,6 +6,14 @@ enum ReturnCode {
     Failure = 1; //失败
 }
 
+//-----------标准-----------
+message DefaultRtnMsg {
+    ReturnCode status = 1; //成功返回状态
+}
+//取消注册成功后返回信息
+message DefaultMsg {
+}
+
 //-----------注册-----------
 //注册模块
 message RegMsg {
@@ -30,10 +38,6 @@ message UnRegMsg {
     string name = 2; //模块名称
     repeated SendMsg module = 3; //取消注册成功后通知模块
 }
-//取消注册成功后返回信息
-message UnRegRtnMsg {
-    ReturnCode status = 1; //取消注册成功返回状态
-}
 
 //-----------通信-----------
 message SendMsg {
@@ -45,16 +49,18 @@ message SendRtnMsg {
     bytes json = 2; //通信返回信息
 }
 
-
 service YeaModule {
     //    注册
     rpc Register (RegMsg) returns (RegRtnMsg) {
     }
     //    取消注册
-    rpc UnRegister (UnRegMsg) returns (UnRegRtnMsg) {
+    rpc UnRegister (UnRegMsg) returns (DefaultRtnMsg) {
     }
     //    数据查询
     rpc Msg (SendMsg) returns (SendRtnMsg) {
+    }
+    //    连接查询
+    rpc Ping (DefaultMsg) returns (DefaultRtnMsg) {
     }
 }
 
@@ -63,6 +69,6 @@ service YeaNotice {
     rpc Msg (SendMsg) returns (SendRtnMsg) {
     }
     //    取消注册
-    rpc UnRegister (UnRegMsg) returns (UnRegRtnMsg) {
+    rpc UnRegister (UnRegMsg) returns (DefaultRtnMsg) {
     }
 }

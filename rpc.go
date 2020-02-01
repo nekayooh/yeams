@@ -126,7 +126,7 @@ func (m YeaRPC) Register(ctx context.Context, msg *proto.RegMsg) (*proto.RegRtnM
 }
 
 //取消注册
-func (m YeaRPC) UnRegister(ctx context.Context, msg *proto.UnRegMsg) (*proto.UnRegRtnMsg, error) {
+func (m YeaRPC) UnRegister(ctx context.Context, msg *proto.UnRegMsg) (*proto.DefaultRtnMsg, error) {
 	if _, ok := YeaModules[msg.Name]; ok {
 		for index, _ := range YeaModules[msg.Name].Modules {
 			if YeaModules[msg.Name].Modules[index].Uuid.String() == msg.Uuid {
@@ -170,20 +170,20 @@ func (m YeaRPC) UnRegister(ctx context.Context, msg *proto.UnRegMsg) (*proto.UnR
 					delete(YeaModules, msg.Name)
 				}
 
-				return &proto.UnRegRtnMsg{
+				return &proto.DefaultRtnMsg{
 					Status: proto.ReturnCode_Success,
 				}, nil
 			} else {
-				return &proto.UnRegRtnMsg{
+				return &proto.DefaultRtnMsg{
 					Status: proto.ReturnCode_Failure,
 				}, nil
 			}
 		}
-		return &proto.UnRegRtnMsg{
+		return &proto.DefaultRtnMsg{
 			Status: proto.ReturnCode_Failure,
 		}, nil
 	} else {
-		return &proto.UnRegRtnMsg{
+		return &proto.DefaultRtnMsg{
 			Status: proto.ReturnCode_Failure,
 		}, nil
 	}

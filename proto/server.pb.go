@@ -49,6 +49,78 @@ func (ReturnCode) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor_ad098daeda4239f7, []int{0}
 }
 
+//-----------标准-----------
+type DefaultRtnMsg struct {
+	Status               ReturnCode `protobuf:"varint,1,opt,name=status,proto3,enum=proto.ReturnCode" json:"status,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
+	XXX_unrecognized     []byte     `json:"-"`
+	XXX_sizecache        int32      `json:"-"`
+}
+
+func (m *DefaultRtnMsg) Reset()         { *m = DefaultRtnMsg{} }
+func (m *DefaultRtnMsg) String() string { return proto.CompactTextString(m) }
+func (*DefaultRtnMsg) ProtoMessage()    {}
+func (*DefaultRtnMsg) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad098daeda4239f7, []int{0}
+}
+
+func (m *DefaultRtnMsg) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_DefaultRtnMsg.Unmarshal(m, b)
+}
+func (m *DefaultRtnMsg) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_DefaultRtnMsg.Marshal(b, m, deterministic)
+}
+func (m *DefaultRtnMsg) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DefaultRtnMsg.Merge(m, src)
+}
+func (m *DefaultRtnMsg) XXX_Size() int {
+	return xxx_messageInfo_DefaultRtnMsg.Size(m)
+}
+func (m *DefaultRtnMsg) XXX_DiscardUnknown() {
+	xxx_messageInfo_DefaultRtnMsg.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DefaultRtnMsg proto.InternalMessageInfo
+
+func (m *DefaultRtnMsg) GetStatus() ReturnCode {
+	if m != nil {
+		return m.Status
+	}
+	return ReturnCode_Success
+}
+
+//取消注册成功后返回信息
+type DefaultMsg struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *DefaultMsg) Reset()         { *m = DefaultMsg{} }
+func (m *DefaultMsg) String() string { return proto.CompactTextString(m) }
+func (*DefaultMsg) ProtoMessage()    {}
+func (*DefaultMsg) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad098daeda4239f7, []int{1}
+}
+
+func (m *DefaultMsg) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_DefaultMsg.Unmarshal(m, b)
+}
+func (m *DefaultMsg) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_DefaultMsg.Marshal(b, m, deterministic)
+}
+func (m *DefaultMsg) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DefaultMsg.Merge(m, src)
+}
+func (m *DefaultMsg) XXX_Size() int {
+	return xxx_messageInfo_DefaultMsg.Size(m)
+}
+func (m *DefaultMsg) XXX_DiscardUnknown() {
+	xxx_messageInfo_DefaultMsg.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DefaultMsg proto.InternalMessageInfo
+
 //-----------注册-----------
 //注册模块
 type RegMsg struct {
@@ -68,7 +140,7 @@ func (m *RegMsg) Reset()         { *m = RegMsg{} }
 func (m *RegMsg) String() string { return proto.CompactTextString(m) }
 func (*RegMsg) ProtoMessage()    {}
 func (*RegMsg) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ad098daeda4239f7, []int{0}
+	return fileDescriptor_ad098daeda4239f7, []int{2}
 }
 
 func (m *RegMsg) XXX_Unmarshal(b []byte) error {
@@ -151,7 +223,7 @@ func (m *RegRtnMsg) Reset()         { *m = RegRtnMsg{} }
 func (m *RegRtnMsg) String() string { return proto.CompactTextString(m) }
 func (*RegRtnMsg) ProtoMessage()    {}
 func (*RegRtnMsg) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ad098daeda4239f7, []int{1}
+	return fileDescriptor_ad098daeda4239f7, []int{3}
 }
 
 func (m *RegRtnMsg) XXX_Unmarshal(b []byte) error {
@@ -201,7 +273,7 @@ func (m *UnRegMsg) Reset()         { *m = UnRegMsg{} }
 func (m *UnRegMsg) String() string { return proto.CompactTextString(m) }
 func (*UnRegMsg) ProtoMessage()    {}
 func (*UnRegMsg) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ad098daeda4239f7, []int{2}
+	return fileDescriptor_ad098daeda4239f7, []int{4}
 }
 
 func (m *UnRegMsg) XXX_Unmarshal(b []byte) error {
@@ -243,46 +315,6 @@ func (m *UnRegMsg) GetModule() []*SendMsg {
 	return nil
 }
 
-//取消注册成功后返回信息
-type UnRegRtnMsg struct {
-	Status               ReturnCode `protobuf:"varint,1,opt,name=status,proto3,enum=proto.ReturnCode" json:"status,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
-	XXX_unrecognized     []byte     `json:"-"`
-	XXX_sizecache        int32      `json:"-"`
-}
-
-func (m *UnRegRtnMsg) Reset()         { *m = UnRegRtnMsg{} }
-func (m *UnRegRtnMsg) String() string { return proto.CompactTextString(m) }
-func (*UnRegRtnMsg) ProtoMessage()    {}
-func (*UnRegRtnMsg) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ad098daeda4239f7, []int{3}
-}
-
-func (m *UnRegRtnMsg) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_UnRegRtnMsg.Unmarshal(m, b)
-}
-func (m *UnRegRtnMsg) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_UnRegRtnMsg.Marshal(b, m, deterministic)
-}
-func (m *UnRegRtnMsg) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UnRegRtnMsg.Merge(m, src)
-}
-func (m *UnRegRtnMsg) XXX_Size() int {
-	return xxx_messageInfo_UnRegRtnMsg.Size(m)
-}
-func (m *UnRegRtnMsg) XXX_DiscardUnknown() {
-	xxx_messageInfo_UnRegRtnMsg.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_UnRegRtnMsg proto.InternalMessageInfo
-
-func (m *UnRegRtnMsg) GetStatus() ReturnCode {
-	if m != nil {
-		return m.Status
-	}
-	return ReturnCode_Success
-}
-
 //-----------通信-----------
 type SendMsg struct {
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
@@ -296,7 +328,7 @@ func (m *SendMsg) Reset()         { *m = SendMsg{} }
 func (m *SendMsg) String() string { return proto.CompactTextString(m) }
 func (*SendMsg) ProtoMessage()    {}
 func (*SendMsg) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ad098daeda4239f7, []int{4}
+	return fileDescriptor_ad098daeda4239f7, []int{5}
 }
 
 func (m *SendMsg) XXX_Unmarshal(b []byte) error {
@@ -343,7 +375,7 @@ func (m *SendRtnMsg) Reset()         { *m = SendRtnMsg{} }
 func (m *SendRtnMsg) String() string { return proto.CompactTextString(m) }
 func (*SendRtnMsg) ProtoMessage()    {}
 func (*SendRtnMsg) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ad098daeda4239f7, []int{5}
+	return fileDescriptor_ad098daeda4239f7, []int{6}
 }
 
 func (m *SendRtnMsg) XXX_Unmarshal(b []byte) error {
@@ -380,10 +412,11 @@ func (m *SendRtnMsg) GetJson() []byte {
 
 func init() {
 	proto.RegisterEnum("proto.ReturnCode", ReturnCode_name, ReturnCode_value)
+	proto.RegisterType((*DefaultRtnMsg)(nil), "proto.DefaultRtnMsg")
+	proto.RegisterType((*DefaultMsg)(nil), "proto.DefaultMsg")
 	proto.RegisterType((*RegMsg)(nil), "proto.RegMsg")
 	proto.RegisterType((*RegRtnMsg)(nil), "proto.RegRtnMsg")
 	proto.RegisterType((*UnRegMsg)(nil), "proto.UnRegMsg")
-	proto.RegisterType((*UnRegRtnMsg)(nil), "proto.UnRegRtnMsg")
 	proto.RegisterType((*SendMsg)(nil), "proto.SendMsg")
 	proto.RegisterType((*SendRtnMsg)(nil), "proto.SendRtnMsg")
 }
@@ -391,32 +424,34 @@ func init() {
 func init() { proto.RegisterFile("server.proto", fileDescriptor_ad098daeda4239f7) }
 
 var fileDescriptor_ad098daeda4239f7 = []byte{
-	// 389 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x91, 0xbf, 0xae, 0xd3, 0x30,
-	0x14, 0xc6, 0xaf, 0x6f, 0x7a, 0x93, 0x9b, 0xd3, 0x52, 0x52, 0x0f, 0xc8, 0xea, 0x14, 0x65, 0xa8,
-	0x42, 0x25, 0x2a, 0x91, 0x2e, 0xec, 0x48, 0x0c, 0xa0, 0x32, 0xb8, 0x62, 0x80, 0x2d, 0x34, 0x47,
-	0x21, 0xd0, 0xc6, 0x95, 0xed, 0x54, 0xe2, 0x59, 0x78, 0x0f, 0x9e, 0x0f, 0xd9, 0x71, 0xfe, 0xa8,
-	0x03, 0x52, 0x3b, 0xe5, 0x7c, 0xf6, 0xf7, 0x9d, 0xfc, 0xce, 0x31, 0xcc, 0x14, 0xca, 0x0b, 0xca,
-	0xcd, 0x59, 0x0a, 0x2d, 0xe8, 0x93, 0xfd, 0x24, 0x7f, 0x09, 0xf8, 0x1c, 0xcb, 0x9d, 0x2a, 0x29,
-	0x83, 0xe0, 0x82, 0x52, 0x55, 0xa2, 0x66, 0x24, 0x26, 0x69, 0xc8, 0x3b, 0x49, 0x23, 0xf0, 0x7e,
-	0xe1, 0x6f, 0xf6, 0x18, 0x93, 0x74, 0xc6, 0x4d, 0x49, 0x29, 0x4c, 0xea, 0xfc, 0x84, 0xcc, 0xb3,
-	0x46, 0x5b, 0x9b, 0x7c, 0x5e, 0x14, 0x12, 0x95, 0x62, 0x93, 0x36, 0xef, 0xa4, 0x71, 0x9f, 0x85,
-	0xd4, 0xec, 0x29, 0x26, 0xa9, 0xc7, 0x6d, 0x4d, 0x5f, 0x81, 0xaf, 0x7f, 0x48, 0xcc, 0x0b, 0xe6,
-	0xdb, 0x53, 0xa7, 0xe8, 0x0a, 0xfc, 0x93, 0x28, 0x9a, 0x23, 0xb2, 0x20, 0xf6, 0xd2, 0x69, 0x36,
-	0x6f, 0x79, 0x37, 0x7b, 0xac, 0x8b, 0x9d, 0x2a, 0xb9, 0xbb, 0x4d, 0x3e, 0x42, 0xc8, 0xb1, 0xe4,
-	0xba, 0x36, 0xe8, 0xaf, 0xc1, 0x57, 0x3a, 0xd7, 0x8d, 0xb2, 0xe4, 0xf3, 0x6c, 0xe1, 0x42, 0x1c,
-	0x75, 0x23, 0xeb, 0xf7, 0xa2, 0x40, 0xee, 0x0c, 0x86, 0xa5, 0x69, 0xaa, 0xc2, 0x0e, 0x13, 0x72,
-	0x5b, 0x27, 0xdf, 0xe0, 0xf9, 0x4b, 0xed, 0xb6, 0xd0, 0xdd, 0x93, 0xe1, 0xbe, 0x9f, 0xf6, 0x71,
-	0x34, 0xed, 0xc0, 0xe9, 0xfd, 0x97, 0xf3, 0x1d, 0x4c, 0x6d, 0xef, 0x9b, 0x49, 0x93, 0xb7, 0x10,
-	0xb8, 0x66, 0x3d, 0x00, 0x19, 0x01, 0x50, 0x98, 0xfc, 0x54, 0xa2, 0x76, 0xaf, 0x62, 0xeb, 0xe4,
-	0x13, 0x80, 0x89, 0xdc, 0xb5, 0x95, 0xeb, 0x66, 0xeb, 0x15, 0xc0, 0xe0, 0xa4, 0x53, 0x08, 0xf6,
-	0xcd, 0xe1, 0x80, 0x4a, 0x45, 0x0f, 0x46, 0x7c, 0xc8, 0xab, 0x63, 0x23, 0x31, 0x22, 0xd9, 0x1f,
-	0x02, 0xe1, 0x57, 0xcc, 0x77, 0x76, 0x5e, 0xfa, 0x06, 0x9e, 0x39, 0x96, 0x95, 0xd2, 0x28, 0xe9,
-	0x8b, 0xfe, 0x87, 0x66, 0xb5, 0xcb, 0x68, 0x90, 0x2d, 0x61, 0xf2, 0x40, 0xb7, 0x00, 0x76, 0x3d,
-	0x6d, 0xe0, 0xa5, 0x73, 0x74, 0xaf, 0xb1, 0xa4, 0xe3, 0x83, 0x3e, 0xb4, 0x06, 0xcf, 0xcc, 0x77,
-	0xb5, 0xf2, 0xe5, 0x62, 0xa4, 0x3b, 0x6f, 0x76, 0xb4, 0x70, 0x9f, 0x85, 0xae, 0x0e, 0x78, 0x4b,
-	0xf0, 0x2e, 0xb2, 0xef, 0xbe, 0x3d, 0xdc, 0xfe, 0x0b, 0x00, 0x00, 0xff, 0xff, 0x7f, 0xc8, 0x97,
-	0x13, 0x6c, 0x03, 0x00, 0x00,
+	// 417 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x52, 0x4d, 0x6f, 0xd3, 0x40,
+	0x10, 0xcd, 0xd6, 0xa9, 0xd3, 0x4c, 0xd3, 0xe2, 0xac, 0x10, 0x5a, 0xe5, 0x64, 0xed, 0xa1, 0x32,
+	0x95, 0xa8, 0x54, 0x23, 0x2e, 0x5c, 0x41, 0x1c, 0x40, 0x46, 0x68, 0x2b, 0x0e, 0x70, 0x33, 0xf1,
+	0x60, 0x0c, 0xe9, 0x6e, 0xb5, 0x1f, 0x95, 0xf8, 0x63, 0xfc, 0x0e, 0x7e, 0x52, 0xb5, 0xeb, 0x8d,
+	0x9d, 0xf6, 0x50, 0xa9, 0x39, 0x79, 0xde, 0xcc, 0x9b, 0xb7, 0xf3, 0x9e, 0x0c, 0x0b, 0x83, 0xfa,
+	0x16, 0xf5, 0xc5, 0x8d, 0x56, 0x56, 0xd1, 0xc3, 0xf0, 0xe1, 0x6f, 0xe1, 0xe4, 0x3d, 0xfe, 0xac,
+	0xdd, 0xc6, 0x0a, 0x2b, 0x2b, 0xd3, 0xd2, 0x97, 0x90, 0x1a, 0x5b, 0x5b, 0x67, 0x18, 0xc9, 0x49,
+	0x71, 0x5a, 0x2e, 0x7b, 0xfe, 0x85, 0x40, 0xeb, 0xb4, 0x7c, 0xa7, 0x1a, 0x14, 0x91, 0xc0, 0x17,
+	0x00, 0x71, 0xb7, 0x32, 0x2d, 0xff, 0x47, 0x20, 0x15, 0xd8, 0x7a, 0x0d, 0x06, 0xb3, 0x5b, 0xd4,
+	0xa6, 0x53, 0x32, 0x88, 0xcc, 0xc5, 0x16, 0xd2, 0x0c, 0x92, 0x3f, 0xf8, 0x97, 0x1d, 0xe4, 0xa4,
+	0x58, 0x08, 0x5f, 0x52, 0x0a, 0x53, 0x59, 0x5f, 0x23, 0x4b, 0x02, 0x31, 0xd4, 0x7e, 0xbf, 0x6e,
+	0x1a, 0x8d, 0xc6, 0xb0, 0x69, 0xbf, 0x1f, 0xa1, 0x67, 0xdf, 0x28, 0x6d, 0xd9, 0x61, 0x4e, 0x8a,
+	0x44, 0x84, 0x9a, 0xbe, 0x80, 0xd4, 0xfe, 0xd2, 0x58, 0x37, 0x2c, 0x0d, 0xdd, 0x88, 0xe8, 0x19,
+	0xa4, 0xd7, 0xaa, 0x71, 0x1b, 0x64, 0xb3, 0x3c, 0x29, 0x8e, 0xcb, 0xd3, 0xe8, 0xe4, 0x0a, 0x65,
+	0x53, 0x99, 0x56, 0xc4, 0x29, 0xff, 0x08, 0x73, 0x81, 0xed, 0x93, 0xed, 0xfb, 0x5b, 0x9c, 0xeb,
+	0x9a, 0x60, 0x66, 0x2e, 0x42, 0xcd, 0xbf, 0xc3, 0xd1, 0x57, 0x19, 0x53, 0xd8, 0xce, 0xc9, 0x38,
+	0x1f, 0xdc, 0x1e, 0xec, 0xb8, 0x1d, 0xef, 0x4c, 0x1e, 0xbd, 0xf3, 0x12, 0x66, 0xb1, 0x35, 0xc8,
+	0x90, 0x1d, 0x19, 0x0a, 0xd3, 0xdf, 0x46, 0xc9, 0x98, 0x6d, 0xa8, 0xf9, 0x27, 0x00, 0xbf, 0xb2,
+	0x97, 0xb7, 0x87, 0x62, 0xe7, 0x67, 0x00, 0x23, 0x93, 0x1e, 0xc3, 0xec, 0xca, 0xad, 0xd7, 0x68,
+	0x4c, 0x36, 0xf1, 0xe0, 0x43, 0xdd, 0x6d, 0x9c, 0xc6, 0x8c, 0x94, 0xff, 0x09, 0xcc, 0xbf, 0x61,
+	0x5d, 0x85, 0xab, 0xe9, 0x2b, 0x38, 0x12, 0xd8, 0x76, 0xc6, 0xa2, 0xa6, 0x27, 0xc3, 0x83, 0x3e,
+	0xa0, 0x55, 0x36, 0xc2, 0xfe, 0x42, 0x3e, 0xa1, 0x6f, 0x00, 0x42, 0x80, 0xfd, 0xc2, 0xb3, 0xc8,
+	0xd8, 0x66, 0xba, 0x7a, 0x1e, 0x1b, 0xf7, 0xfe, 0x59, 0x3e, 0xa1, 0xe7, 0x90, 0x78, 0x87, 0x0f,
+	0xa2, 0x5b, 0x2d, 0x77, 0xf0, 0xc0, 0xbd, 0x84, 0xe9, 0x97, 0x4e, 0xb6, 0x74, 0x79, 0x5f, 0xeb,
+	0x11, 0xf9, 0x52, 0x06, 0x47, 0x9f, 0x95, 0xed, 0xd6, 0xf8, 0xa4, 0xb7, 0xf6, 0xb3, 0xf3, 0x23,
+	0x0d, 0xed, 0xd7, 0x77, 0x01, 0x00, 0x00, 0xff, 0xff, 0x85, 0xb6, 0x17, 0x7c, 0xb3, 0x03, 0x00,
+	0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -434,9 +469,11 @@ type YeaModuleClient interface {
 	//    注册
 	Register(ctx context.Context, in *RegMsg, opts ...grpc.CallOption) (*RegRtnMsg, error)
 	//    取消注册
-	UnRegister(ctx context.Context, in *UnRegMsg, opts ...grpc.CallOption) (*UnRegRtnMsg, error)
+	UnRegister(ctx context.Context, in *UnRegMsg, opts ...grpc.CallOption) (*DefaultRtnMsg, error)
 	//    数据查询
 	Msg(ctx context.Context, in *SendMsg, opts ...grpc.CallOption) (*SendRtnMsg, error)
+	//    连接查询
+	Ping(ctx context.Context, in *DefaultMsg, opts ...grpc.CallOption) (*DefaultRtnMsg, error)
 }
 
 type yeaModuleClient struct {
@@ -456,8 +493,8 @@ func (c *yeaModuleClient) Register(ctx context.Context, in *RegMsg, opts ...grpc
 	return out, nil
 }
 
-func (c *yeaModuleClient) UnRegister(ctx context.Context, in *UnRegMsg, opts ...grpc.CallOption) (*UnRegRtnMsg, error) {
-	out := new(UnRegRtnMsg)
+func (c *yeaModuleClient) UnRegister(ctx context.Context, in *UnRegMsg, opts ...grpc.CallOption) (*DefaultRtnMsg, error) {
+	out := new(DefaultRtnMsg)
 	err := c.cc.Invoke(ctx, "/proto.YeaModule/UnRegister", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -474,14 +511,25 @@ func (c *yeaModuleClient) Msg(ctx context.Context, in *SendMsg, opts ...grpc.Cal
 	return out, nil
 }
 
+func (c *yeaModuleClient) Ping(ctx context.Context, in *DefaultMsg, opts ...grpc.CallOption) (*DefaultRtnMsg, error) {
+	out := new(DefaultRtnMsg)
+	err := c.cc.Invoke(ctx, "/proto.YeaModule/Ping", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // YeaModuleServer is the server API for YeaModule service.
 type YeaModuleServer interface {
 	//    注册
 	Register(context.Context, *RegMsg) (*RegRtnMsg, error)
 	//    取消注册
-	UnRegister(context.Context, *UnRegMsg) (*UnRegRtnMsg, error)
+	UnRegister(context.Context, *UnRegMsg) (*DefaultRtnMsg, error)
 	//    数据查询
 	Msg(context.Context, *SendMsg) (*SendRtnMsg, error)
+	//    连接查询
+	Ping(context.Context, *DefaultMsg) (*DefaultRtnMsg, error)
 }
 
 // UnimplementedYeaModuleServer can be embedded to have forward compatible implementations.
@@ -491,11 +539,14 @@ type UnimplementedYeaModuleServer struct {
 func (*UnimplementedYeaModuleServer) Register(ctx context.Context, req *RegMsg) (*RegRtnMsg, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
 }
-func (*UnimplementedYeaModuleServer) UnRegister(ctx context.Context, req *UnRegMsg) (*UnRegRtnMsg, error) {
+func (*UnimplementedYeaModuleServer) UnRegister(ctx context.Context, req *UnRegMsg) (*DefaultRtnMsg, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UnRegister not implemented")
 }
 func (*UnimplementedYeaModuleServer) Msg(ctx context.Context, req *SendMsg) (*SendRtnMsg, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Msg not implemented")
+}
+func (*UnimplementedYeaModuleServer) Ping(ctx context.Context, req *DefaultMsg) (*DefaultRtnMsg, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
 }
 
 func RegisterYeaModuleServer(s *grpc.Server, srv YeaModuleServer) {
@@ -556,6 +607,24 @@ func _YeaModule_Msg_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
+func _YeaModule_Ping_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DefaultMsg)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YeaModuleServer).Ping(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/proto.YeaModule/Ping",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YeaModuleServer).Ping(ctx, req.(*DefaultMsg))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _YeaModule_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "proto.YeaModule",
 	HandlerType: (*YeaModuleServer)(nil),
@@ -572,6 +641,10 @@ var _YeaModule_serviceDesc = grpc.ServiceDesc{
 			MethodName: "Msg",
 			Handler:    _YeaModule_Msg_Handler,
 		},
+		{
+			MethodName: "Ping",
+			Handler:    _YeaModule_Ping_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "server.proto",
@@ -583,7 +656,7 @@ var _YeaModule_serviceDesc = grpc.ServiceDesc{
 type YeaNoticeClient interface {
 	Msg(ctx context.Context, in *SendMsg, opts ...grpc.CallOption) (*SendRtnMsg, error)
 	//    取消注册
-	UnRegister(ctx context.Context, in *UnRegMsg, opts ...grpc.CallOption) (*UnRegRtnMsg, error)
+	UnRegister(ctx context.Context, in *UnRegMsg, opts ...grpc.CallOption) (*DefaultRtnMsg, error)
 }
 
 type yeaNoticeClient struct {
@@ -603,8 +676,8 @@ func (c *yeaNoticeClient) Msg(ctx context.Context, in *SendMsg, opts ...grpc.Cal
 	return out, nil
 }
 
-func (c *yeaNoticeClient) UnRegister(ctx context.Context, in *UnRegMsg, opts ...grpc.CallOption) (*UnRegRtnMsg, error) {
-	out := new(UnRegRtnMsg)
+func (c *yeaNoticeClient) UnRegister(ctx context.Context, in *UnRegMsg, opts ...grpc.CallOption) (*DefaultRtnMsg, error) {
+	out := new(DefaultRtnMsg)
 	err := c.cc.Invoke(ctx, "/proto.YeaNotice/UnRegister", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -616,7 +689,7 @@ func (c *yeaNoticeClient) UnRegister(ctx context.Context, in *UnRegMsg, opts ...
 type YeaNoticeServer interface {
 	Msg(context.Context, *SendMsg) (*SendRtnMsg, error)
 	//    取消注册
-	UnRegister(context.Context, *UnRegMsg) (*UnRegRtnMsg, error)
+	UnRegister(context.Context, *UnRegMsg) (*DefaultRtnMsg, error)
 }
 
 // UnimplementedYeaNoticeServer can be embedded to have forward compatible implementations.
@@ -626,7 +699,7 @@ type UnimplementedYeaNoticeServer struct {
 func (*UnimplementedYeaNoticeServer) Msg(ctx context.Context, req *SendMsg) (*SendRtnMsg, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Msg not implemented")
 }
-func (*UnimplementedYeaNoticeServer) UnRegister(ctx context.Context, req *UnRegMsg) (*UnRegRtnMsg, error) {
+func (*UnimplementedYeaNoticeServer) UnRegister(ctx context.Context, req *UnRegMsg) (*DefaultRtnMsg, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UnRegister not implemented")
 }
 
