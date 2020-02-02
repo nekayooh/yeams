@@ -9,6 +9,7 @@ import (
 	"log"
 	"net"
 	"strconv"
+	"time"
 )
 
 //接受注册
@@ -52,12 +53,12 @@ func (m YeaRPC) Register(ctx context.Context, msg *proto.RegMsg) (*proto.RegRtnM
 			Address: msg.Address,
 			Port:    msg.Port,
 			Thread:  msg.Thread,
-			Module:  msg.Module,
 			Uuid:    uuid.Must(uuid.NewV5(uuid.NewV1(), msg.Name), nil),
 			Chan:    make(chan *proto.YeaNoticeClient, 1),
 			Close:   make(chan bool, 1),
 			Conn:    []*grpc.ClientConn{},
 			Client:  []*proto.YeaNoticeClient{},
+			Ping:    time.Now(),
 		})
 	//失败次数
 	FailCount := 1
@@ -195,20 +196,24 @@ func (m YeaRPC) Msg(ctx context.Context, msg *proto.SendMsg) (*proto.SendRtnMsg,
 	//if _, ok := YeaModules[msg.Name]; ok {
 	//	if YeaModules[msg.Name].Modules[moduleIndex%int(YeaModules[msg.Name].Total)].Uuid.String() == msg.Uuid {
 	if _, ok := YeaModules[msg.Name]; ok {
-		moduleIndex := int(YeaModules[msg.Name].Count)
-		if moduleIndex >= int(YeaModules[msg.Name].Total)-1 {
-			YeaModules[msg.Name].Count = int64(0)
-		} else {
-			YeaModules[msg.Name].Count++
+		for i := int(YeaModules[msg.Name].Total); i > 0; i-- {
+			moduleIndex := int(YeaModules[msg.Name].Count)
+			if moduleIndex >= int(YeaModules[msg.Name].Total)-1 {
+				YeaModules[msg.Name].Count = int64(0)
+			} else {
+				YeaModules[msg.Name].Count++
+			}
+			//一分钟以内有ping信息
+			if time.Now().Sub(YeaModules[msg.Name].Modules[moduleIndex%int(YeaModules[msg.Name].Total)].Ping) <= time.Minute {
+				YeaModules[msg.Name].Modules[moduleIndex%int(YeaModules[msg.Name].Total)].Close <- false
+				NoticeClient := <-YeaModules[msg.Name].Modules[moduleIndex%int(YeaModules[msg.Name].Total)].Chan
+				return (*NoticeClient).Msg(ctx, msg)
+			}
 		}
-		YeaModules[msg.Name].Modules[moduleIndex%int(YeaModules[msg.Name].Total)].Close <- false
-		NoticeClient := <-YeaModules[msg.Name].Modules[moduleIndex%int(YeaModules[msg.Name].Total)].Chan
-		return (*NoticeClient).Msg(ctx, msg)
-	} else {
-		return &proto.SendRtnMsg{
-			Status: proto.ReturnCode_Failure,
-		}, nil
 	}
+	return &proto.SendRtnMsg{
+		Status: proto.ReturnCode_Failure,
+	}, nil
 	//} else {
 	//	return &proto.SendRtnMsg{
 	//		Status: proto.ReturnCode_Failure,
@@ -221,7 +226,18 @@ func (m YeaRPC) Msg(ctx context.Context, msg *proto.SendMsg) (*proto.SendRtnMsg,
 	//}
 }
 
-func (m YeaRPC) Ping(context.Context, *proto.DefaultMsg) (*proto.DefaultRtnMsg, error) {
+func (m YeaRPC) Ping(ctx context.Context, msg *proto.DefaultMsg) (*proto.DefaultRtnMsg, error) {
+	if _, ok := YeaModules[msg.Name]; ok {
+		for index, _ := range YeaModules[msg.Name].Modules {
+			if YeaModules[msg.Name].Modules[index].Uuid.String() == msg.Uuid {
+				//刷新ping时间
+				YeaModules[msg.Name].Modules[index].Ping = time.Now()
+				return &proto.DefaultRtnMsg{
+					Status: proto.ReturnCode_Success,
+				}, nil
+			}
+		}
+	}
 	return &proto.DefaultRtnMsg{
 		Status: proto.ReturnCode_Failure,
 	}, nil

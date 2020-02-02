@@ -12,6 +12,8 @@ message DefaultRtnMsg {
 }
 //取消注册成功后返回信息
 message DefaultMsg {
+    string uuid = 1; //模块签名
+    string name = 2; //模块名称
 }
 
 //-----------注册-----------
