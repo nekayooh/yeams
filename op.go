@@ -123,14 +123,14 @@ func UnRegisterAllModules() {
 			for _, v := range YeaModules[a].Modules[index].Conn {
 				_ = v.Close()
 			}
-			//删除模块
-			delete(YeaModules, a)
 
 			lastModule := ""
 			for k, _ := range YeaModules {
 				lastModule += k + ","
 			}
 		}
+		//删除模块
+		delete(YeaModules, a)
 	}
 }
 

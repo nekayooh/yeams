@@ -208,6 +208,24 @@ func (m YeaRPC) Msg(ctx context.Context, msg *proto.SendMsg) (*proto.SendRtnMsg,
 				YeaModules[msg.Name].Modules[moduleIndex%int(YeaModules[msg.Name].Total)].Close <- false
 				NoticeClient := <-YeaModules[msg.Name].Modules[moduleIndex%int(YeaModules[msg.Name].Total)].Chan
 				return (*NoticeClient).Msg(ctx, msg)
+			} else {
+				//调用时删除断线模块
+				ModuleMutex.Lock()
+				_, _ = (*YeaModules[msg.Name].Modules[moduleIndex%int(YeaModules[msg.Name].Total)].Client[0]).UnRegister(context.Background(), &proto.UnRegMsg{
+					Uuid: YeaModules[msg.Name].Modules[moduleIndex%int(YeaModules[msg.Name].Total)].Uuid.String(),
+				})
+				//关闭线程
+				for i := 0; i < int(YeaModules[msg.Name].Modules[moduleIndex%int(YeaModules[msg.Name].Total)].Thread); i++ {
+					YeaModules[msg.Name].Modules[moduleIndex%int(YeaModules[msg.Name].Total)].Close <- true
+				}
+				//关闭连接
+				for _, v := range YeaModules[msg.Name].Modules[moduleIndex%int(YeaModules[msg.Name].Total)].Conn {
+					_ = v.Close()
+				}
+				YeaModules[msg.Name].Modules = append(YeaModules[msg.Name].Modules[:moduleIndex%int(YeaModules[msg.Name].Total)], YeaModules[msg.Name].Modules[moduleIndex%int(YeaModules[msg.Name].Total)+1:]...)
+				YeaModules[msg.Name].Total = YeaModules[msg.Name].Total - 1
+				YeaModules[msg.Name].Count = YeaModules[msg.Name].Count - 1
+				ModuleMutex.Unlock()
 			}
 		}
 	}
