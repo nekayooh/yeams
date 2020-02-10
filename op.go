@@ -7,6 +7,7 @@ import (
 	"github.com/nekayooh/yeams/proto"
 	"github.com/satori/go.uuid"
 	"google.golang.org/grpc"
+	"io/ioutil"
 	"os"
 	"os/exec"
 	"sync"
@@ -67,6 +68,15 @@ func RegisterOneModule(index int) {
 
 //注册模块
 func RegisterAllModules() {
+	YeaLocalModule = []string{}
+	//检索模块
+	rd, _ := ioutil.ReadDir("./module")
+	for _, fi := range rd {
+		if fi.IsDir() {
+			YeaLocalModule = append(YeaLocalModule, fi.Name())
+		}
+	}
+
 	//加载模块
 	for _, v := range YeaLocalModule {
 		go func(module string) {
