@@ -19,8 +19,6 @@ type YeaRPC struct{}
 type YeaModuleOne struct {
 	//模块版本
 	Version string
-	//模块验证密钥
-	Key []byte
 	//模块运行地址
 	Address string
 	//模块绑定端口
@@ -35,6 +33,7 @@ type YeaModuleOne struct {
 	Chan chan *proto.YeaNoticeClient
 	//模块结束标志
 	Close chan bool
+
 	//模块连接客户端
 	Conn []*grpc.ClientConn
 	//模块客户端

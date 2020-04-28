@@ -49,7 +49,6 @@ func (m YeaRPC) Register(ctx context.Context, msg *proto.RegMsg) (*proto.RegRtnM
 	YeaModules[msg.Name].Modules = append(YeaModules[msg.Name].Modules,
 		&YeaModuleOne{
 			Version: msg.Version,
-			Key:     msg.Key,
 			Address: msg.Address,
 			Port:    msg.Port,
 			Thread:  msg.Thread,
@@ -91,7 +90,7 @@ func (m YeaRPC) Register(ctx context.Context, msg *proto.RegMsg) (*proto.RegRtnM
 		}()
 	}
 	if FailCount > 4 {
-		fmt.Printf("加载插件%s[次数%v]失败\n", msg.Name, FailCount)
+		fmt.Printf("加载模块%s[次数%v]失败\n", msg.Name, FailCount)
 
 		//如果插件数为0，则取消
 		if YeaModules[msg.Name].Total == 0 {
@@ -104,7 +103,7 @@ func (m YeaRPC) Register(ctx context.Context, msg *proto.RegMsg) (*proto.RegRtnM
 			Status: proto.ReturnCode_Failure,
 		}, nil
 	} else {
-		fmt.Printf("加载插件%s[线程%v]成功\n", msg.Name, msg.Thread)
+		fmt.Printf("加载模块%s[线程%v]成功\n", msg.Name, msg.Thread)
 		YeaModules[msg.Name].Total++
 		//注册成功
 		for _, v := range msg.Module {
@@ -269,6 +268,11 @@ func GrpcOp() {
 	s := grpc.NewServer()
 	proto.RegisterYeaModuleServer(s, &YeaRPC{})
 
+	go func() {
+		//1秒后自动启动注册
+		time.Sleep(1 * time.Second)
+		RegisterAllModules()
+	}()
 	go func() {
 		//go httpserver.HttpServerStart()
 		if err := s.Serve(lis); err != nil {
